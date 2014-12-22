@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <!-- All non-weave related configuration for this module belongs here -->
+           
+    <bean class="org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean">
+        <property name="moduleName" value="coupon" />
+        <property name="lifeCycleEvent" value="LOADING" />
+    </bean>
+
+    <bean id="blConfiguration" class="org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesConfigurer">
+        <property name="overridableProperyLocations">
+            <set>
+                <value>classpath:config/bc/coupon/</value>
+            </set>
+        </property>
+    </bean>
+    
+    <bean id="blMergedPersistenceXmlLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath*:/META-INF/persistence-coupon.xml</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="blMergedEntityContexts" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath:bl-coupon-applicationContext-entity.xml</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="blMergedCacheConfigLocations" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <value>classpath:bl-coupon-ehcache.xml</value>
+            </list>
+        </property>
+    </bean>    
+    
+    <context:component-scan base-package="itwise.broadleafcommerce.coupon" />
+</beans>
