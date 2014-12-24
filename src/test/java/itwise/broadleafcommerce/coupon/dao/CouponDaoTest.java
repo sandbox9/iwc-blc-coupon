@@ -1,7 +1,5 @@
 package itwise.broadleafcommerce.coupon.dao;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,7 +26,6 @@ public class CouponDaoTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
 	}
 
 }
