@@ -1,7 +1,5 @@
 package itwise.broadleafcommerce.coupon.domain;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,7 +26,6 @@ public class CouponTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
 	}
 
 }
