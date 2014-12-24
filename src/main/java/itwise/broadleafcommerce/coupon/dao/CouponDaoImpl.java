@@ -75,5 +75,4 @@ public class CouponDaoImpl implements CouponDao {
 		List<Coupon> coupons = query.getResultList();
 		return coupons == null || coupons.isEmpty() ? null : coupons.get(0);
 	}
-
 }

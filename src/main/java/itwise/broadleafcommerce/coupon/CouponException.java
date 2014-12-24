@@ -24,5 +24,4 @@ public class CouponException extends ServiceException {
 	public CouponException(String message, Throwable cause) {
 		super(message, cause);
 	}
-
 }

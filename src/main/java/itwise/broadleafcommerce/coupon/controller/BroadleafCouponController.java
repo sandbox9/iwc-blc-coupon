@@ -45,8 +45,9 @@ public class BroadleafCouponController extends BroadleafAbstractController {
 
 	private static String couponDetailView = "coupon/coupon";
 	private static String couponListView = "coupon/coupon";
-	private static String couponPageRedirect = "redirect:/coupon";
-	private static String myCoupons = "coupon/coupon";
+	private static String couponPageRedirect = "redirect:/coupons";
+	private static String myCouponsView = "account/myCoupon";
+	private static String myApplyCouponView = "account/applyCoupon";
 
 	/**
 	 * 
@@ -121,25 +122,19 @@ public class BroadleafCouponController extends BroadleafAbstractController {
 		return "redirect:/coupons";
 	}
 
-	public String myCoupons(HttpServletRequest request, HttpServletResponse response, Model model) {
-		List<Coupon> coupons = couponService.findCouponsForCustomer(CustomerState.getCustomer());
-		model.addAttribute("coupons", coupons);
-		return getMyCoupons();
-	}
-
 	/**
 	 * @return the myCoupons
 	 */
-	public static String getMyCoupons() {
-		return myCoupons;
+	public static String getMyCouponsView() {
+		return myCouponsView;
 	}
 
 	/**
-	 * @param myCoupons
+	 * @param myCouponsView
 	 *            the myCoupons to set
 	 */
-	public static void setMyCoupons(String myCoupons) {
-		BroadleafCouponController.myCoupons = myCoupons;
+	public static void setMyCoupons(String myCouponsView) {
+		BroadleafCouponController.myCouponsView = myCouponsView;
 	}
 
 	public void appyCoupon2Order(HttpServletRequest request, HttpServletResponse response, Long couponId, Long orderId) {
@@ -152,5 +147,16 @@ public class BroadleafCouponController extends BroadleafAbstractController {
 
 	public void appyCoupon2Fulfillment(HttpServletRequest request, HttpServletResponse response, Long couponId, Long fulfillmentId) {
 		couponService.applyCoupon2Fulfillment(CustomerState.getCustomer(), couponId, fulfillmentId);
+	}
+
+	public String viewMyCoupon(HttpServletRequest request, Model model) {
+		List<Coupon> coupons = couponService.findCouponsForCustomer(CustomerState.getCustomer());
+		model.addAttribute("coupons", coupons);
+		return getMyCouponsView();
+	}
+
+	public String viewApplyCoupon(HttpServletRequest request, Model model) {
+		model.addAttribute("coupons", couponService.findCouponsForCustomer(CustomerState.getCustomer()));
+		return myApplyCouponView;
 	}
 }

@@ -55,5 +55,4 @@ public class CouponOfferActivity extends BaseActivity<ProcessContext<Order>> {
 
 		return context;
 	}
-
 }

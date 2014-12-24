@@ -22,4 +22,5 @@ public interface Coupon extends Offer, Serializable {
 	int getAvailableDownload();
 
 	void setAvailableDownload(int i);
+
 }
