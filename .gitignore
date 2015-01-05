@@ -16,3 +16,7 @@ hs_err_pid*
 /.settings
 /target
 rebel.xml
+
+# intelliJ config files
+.idea
+*.iml
