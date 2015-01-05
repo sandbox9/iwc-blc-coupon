@@ -1,6 +1,6 @@
 package itwise.broadleafcommerce.coupon;
 
-import itwise.broadleafcommerce.coupon.domain.Coupon;
+import itwise.broadleafcommerce.coupon.domain.OfferCoupon;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -16,7 +16,7 @@ public class CouponStatus implements Serializable, BroadleafEnumerationType {
     private static final LinkedHashMap<String, CouponStatus> TYPES = new LinkedHashMap<String, CouponStatus>();
 
     /**
-     * Represents a wishlist. This also usually means that the {@link Coupon} has its {@link Coupon#getName()} set although
+     * Represents a wishlist. This also usually means that the {@link OfferCoupon} has its {@link OfferCoupon#getName()} set although
      * not required
      */
     public static final CouponStatus PREPARED = new CouponStatus("PREPARED", "Prepared");

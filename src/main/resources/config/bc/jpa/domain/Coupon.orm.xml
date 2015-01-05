@@ -30,7 +30,7 @@
     </named-query>
     
     <named-query name="BC_READ_COUPONS_FOR_DOWNLOAD" >
-        <query>SELECT coupons FROM itwise.broadleafcommerce.coupon.domain.Coupon coupons
+        <query>SELECT coupons FROM itwise.broadleafcommerce.coupon.domain.OfferCoupon coupons
         </query>
     </named-query>
 	
@@ -44,9 +44,16 @@
 	 -->
      <named-query name="BC_READ_COUPON_BY_COUPON_ID" >
         <query>
-        	SELECT coupons FROM itwise.broadleafcommerce.coupon.domain.Coupon coupons
+        	SELECT coupons FROM itwise.broadleafcommerce.coupon.domain.OfferCoupon coupons
         	WHERE coupons.id = :couponId
         </query>
     </named-query>
 	 
+	 
+	<named-query name="BC_READ_COUPON_BY_PRODUCT_ID" >
+        <query>
+        	SELECT coupons FROM itwise.broadleafcommerce.coupon.domain.OfferCoupon coupons
+        	WHERE coupons.id = :couponId
+        </query>
+    </named-query>
 </entity-mappings>

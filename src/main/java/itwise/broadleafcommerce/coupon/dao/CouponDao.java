@@ -1,17 +1,17 @@
 package itwise.broadleafcommerce.coupon.dao;
 
-import itwise.broadleafcommerce.coupon.domain.Coupon;
 import itwise.broadleafcommerce.coupon.domain.CustomerCoupon;
+import itwise.broadleafcommerce.coupon.domain.OfferCoupon;
 
 import java.util.List;
 
 public interface CouponDao {
 
-	List<Coupon> readCouponsForCustomer(Long customerId);
+	List<OfferCoupon> readCouponsForCustomer(Long customerId);
 
-	List<Coupon> readCouponsForDownload();
+	List<OfferCoupon> readCouponsForDownload();
 
-	Coupon readCouponByCouponId(Long couponId);
+	OfferCoupon readCouponByCouponId(Long couponId);
 
 	void download(CustomerCoupon customerCoupon);
 
@@ -20,4 +20,10 @@ public interface CouponDao {
 	void doApplyCoupon2Order(Long customerId, Long couponId, Long orderId);
 
 	void doApplyCoupon2Fulfillment(Long customerId, Long couponId, Long fulfillmentId);
+
+	OfferCoupon readCouponByProductId(Long productId);
+
+	List<OfferCoupon> readCouponByCustomer(Long customerId);
+
+	List<OfferCoupon> readCouponByAvailable(Long customerId);
 }

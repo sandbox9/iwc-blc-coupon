@@ -51,10 +51,10 @@ public class CustomerCouponImpl implements CustomerCoupon {
 	@JoinColumn(name = "CUSTOMER_ID")
 	protected Customer customer;
 	
-	@ManyToOne(cascade = CascadeType.ALL, targetEntity = CouponImpl.class, optional=false)
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = OfferCouponImpl.class, optional=false)
 	@JoinColumn(name = "OFFER_ID")
 	@Index(name="CUSTOMERCOUPON_OFFER_INDEX", columnNames={"OFFER_ID"})
-	protected Coupon coupon;
+	protected OfferCoupon coupon;
 	
 	
 	@Column(name = "DONWLOAD_DATE")
@@ -75,12 +75,12 @@ public class CustomerCouponImpl implements CustomerCoupon {
 	}
 
 	@Override
-	public Coupon getCoupon() {
+	public OfferCoupon getCoupon() {
 		return this.coupon;
 	}
 
 	@Override
-	public void setCoupon(Coupon coupon) {
+	public void setCoupon(OfferCoupon coupon) {
 		this.coupon = coupon;
 	}
 

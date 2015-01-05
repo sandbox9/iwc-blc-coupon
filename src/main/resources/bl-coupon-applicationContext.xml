@@ -121,5 +121,8 @@
     <!--
         End of multitenant module support
     -->
-
+	<bean id="blOfferDao" class="itwise.broadleafcommerce.coupon.dao.CouponDaoImpl" />
+	<bean id="blCouponService" class="itwise.broadleafcommerce.coupon.service.CouponServiceImpl" />
+	<bean id="blOrderService" class="itwise.broadleafcommerce.coupon.service.OrderServiceForCouponImpl" />
+	<bean id="blItemOfferProcessor" class="itwise.broadleafcommerce.coupon.ItemOfferProcessor4CouponImpl" />
 </beans>

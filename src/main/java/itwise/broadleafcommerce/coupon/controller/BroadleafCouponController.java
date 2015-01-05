@@ -1,7 +1,7 @@
 package itwise.broadleafcommerce.coupon.controller;
 
 import itwise.broadleafcommerce.coupon.CouponException;
-import itwise.broadleafcommerce.coupon.domain.Coupon;
+import itwise.broadleafcommerce.coupon.domain.OfferCoupon;
 import itwise.broadleafcommerce.coupon.service.CouponService;
 
 import java.util.HashMap;
@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.broadleafcommerce.common.util.BLCMessageUtils;
 import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
+import org.broadleafcommerce.core.order.domain.Order;
 import org.broadleafcommerce.core.order.service.exception.IllegalCartOperationException;
 import org.broadleafcommerce.core.pricing.service.exception.PricingException;
+import org.broadleafcommerce.core.web.order.CartState;
 import org.broadleafcommerce.core.web.service.UpdateCartService;
 import org.broadleafcommerce.profile.web.core.CustomerState;
 import org.springframework.ui.Model;
@@ -66,9 +68,8 @@ public class BroadleafCouponController extends BroadleafAbstractController {
 	 * @throws PricingException
 	 */
 	public String availableDownload(HttpServletRequest request, HttpServletResponse response, Model model) throws PricingException {
-		List<Coupon> coupons = couponService.findCouponForDownload();
+		List<OfferCoupon> coupons = couponService.findCouponForDownload();
 		model.addAttribute("coupons", coupons);
-		model.addAttribute("xxx", coupons.get(0).getType().getFriendlyType());
 		return getCouponListView();
 	}
 
@@ -106,12 +107,12 @@ public class BroadleafCouponController extends BroadleafAbstractController {
 	}
 
 	public String doDownload(HttpServletRequest request, HttpServletResponse response, Long couponId) throws CouponException {
-		Coupon coupon = couponService.findCouponByCouponId(couponId);
+		OfferCoupon coupon = couponService.lookupCouponById(couponId);
 		if (coupon == null) {
 			throw new CouponException("존재하지 않는 쿠폰입니다.");
 		}
 
-		List<Coupon> coupons = couponService.findCouponsForCustomer(CustomerState.getCustomer());
+		List<OfferCoupon> coupons = couponService.findCouponsForCustomer(CustomerState.getCustomer());
 		if (coupons.contains(coupon)) {
 			throw new CouponException("이미 다운로드 받은 쿠폰입니다.");
 		}
@@ -150,13 +151,24 @@ public class BroadleafCouponController extends BroadleafAbstractController {
 	}
 
 	public String viewMyCoupon(HttpServletRequest request, Model model) {
-		List<Coupon> coupons = couponService.findCouponsForCustomer(CustomerState.getCustomer());
+		List<OfferCoupon> coupons = couponService.findCouponsForCustomer(CustomerState.getCustomer());
 		model.addAttribute("coupons", coupons);
 		return getMyCouponsView();
 	}
 
 	public String viewApplyCoupon(HttpServletRequest request, Model model) {
 		model.addAttribute("coupons", couponService.findCouponsForCustomer(CustomerState.getCustomer()));
+		return myApplyCouponView;
+	}
+
+	public String availableCoupon(HttpServletRequest request, HttpServletResponse response, Model model) throws PricingException {
+		Order cart = CartState.getCart();
+		List<OfferCoupon> coupons = couponService.findCouponForApply(cart);
+		model.addAttribute("coupons", coupons);
+		return getMyCouponApplyView();
+	}
+
+	private String getMyCouponApplyView() {
 		return myApplyCouponView;
 	}
 }

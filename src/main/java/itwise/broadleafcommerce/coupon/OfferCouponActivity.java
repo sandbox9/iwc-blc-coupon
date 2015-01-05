@@ -21,14 +21,18 @@ package itwise.broadleafcommerce.coupon;
  */
 import itwise.broadleafcommerce.coupon.service.CouponService;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.broadleafcommerce.core.offer.domain.Offer;
+import org.broadleafcommerce.core.offer.domain.OfferCode;
 import org.broadleafcommerce.core.order.domain.Order;
 import org.broadleafcommerce.core.order.service.OrderService;
-import org.broadleafcommerce.core.workflow.BaseActivity;
+import org.broadleafcommerce.core.pricing.service.workflow.OfferActivity;
 import org.broadleafcommerce.core.workflow.ProcessContext;
 
-public class CouponOfferActivity extends BaseActivity<ProcessContext<Order>> {
+public class OfferCouponActivity extends OfferActivity {
 
 	@Resource(name = "blCouponService")
 	protected CouponService couponService;
@@ -39,9 +43,33 @@ public class CouponOfferActivity extends BaseActivity<ProcessContext<Order>> {
 	@Override
 	public ProcessContext<Order> execute(ProcessContext<Order> context) throws Exception {
 		Order order = context.getSeedData();
-		// List<OfferCode> offerCodes =
-		// couponService.buildOfferCodeListForCustomer(order.getCustomer());
-		// order = orderService.addOfferCodes(order, coupons, false);
+		List<OfferCode> offerCodes = offerService.buildOfferCodeListForCustomer(order.getCustomer());
+		if (offerCodes != null && !offerCodes.isEmpty()) {
+			order = orderService.addOfferCodes(order, offerCodes, false);
+		}
+
+		// 고객 쿠폰 가져와서 order에 추가한다.
+//		List<OfferCoupon> coupons = couponService.buildCouponListForCustomer(order);
+//		if (coupons != null && !coupons.isEmpty()) {
+//			order = couponService.addCoupons(order, coupons, false);
+//		}
+
+//		일단 적용가능한 모든 Offer를 가져온다.
+		List<Offer> offers = offerService.buildOfferListForOrder(order);
+		order = offerService.applyAndSaveOffersToOrder(offers, order);
+		context.setSeedData(order);
+
+//		Long couponId;
+		//TODO: 적용할 쿠폰 가져오기
+//		OfferCoupon coupon = couponService.findCouponByCustomerCoupon(couponId, order.getCustomer());
+
+//		// TODO: 현재 주문에 쿠폰 적용 하기
+//		if (coupons != null && !coupons.isEmpty()) {
+//			order = orderService.addCoupons(order, coupons, false);
+//		}
+
+//		TODO: 현재 주문 상품에 쿠폰 적용 하기
+//		TODO: 현재 주문에 배송비 할인 쿠폰 적용하기
 
 		// List<Coupon> coupons =
 		// couponService.buildCouponListForCustomer(order.getCustomer());
@@ -50,8 +78,8 @@ public class CouponOfferActivity extends BaseActivity<ProcessContext<Order>> {
 		// }
 
 		// List<Offer> offers = couponService.buildOfferListForOrder(order);
-		// order = couponService.applyAndSaveOffersToOrder(offers, order);
-		context.setSeedData(order);
+		// order = orderService.applyAndSaveCouponToOrder(offers, order);
+//		context.setSeedData(order);
 
 		return context;
 	}

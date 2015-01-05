@@ -3,9 +3,10 @@ package itwise.broadleafcommerce.coupon.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.broadleafcommerce.common.persistence.Status;
 import org.broadleafcommerce.core.offer.domain.Offer;
 
-public interface Coupon extends Offer, Serializable {
+public interface OfferCoupon extends Serializable, Status {
 
 	String getCouponName();
 
@@ -23,4 +24,7 @@ public interface Coupon extends Offer, Serializable {
 
 	void setAvailableDownload(int i);
 
+	public Offer getOffer();
+
+	public void setOffer(Offer offer);
 }
